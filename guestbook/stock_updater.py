@@ -1,9 +1,6 @@
 #!/usr/env python
 # -*- coding: utf-8 -*-
-import sys
-sys.path.insert(0,"requests")
-import requests
-
+from google.appengine.api import urlfetch
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 import logging
@@ -27,13 +24,22 @@ class MyParser(HTMLParser):
 #            print "Data     :", data
             self.Found = False
 
+MAX_RETRY = 3			
+			
 def Get_command():			
     content=''
     content.decode('gbk')
     for s in stocks:
         url = mock + s[0]
-        P = MyParser()
-        P.feed(requests.get(url).content.decode('gbk'))
+  	retry = 0
+	result = urlfetch.fetch(url,deadline=30)
+  	while result.status_code != 200 and retry < MAX_RETRY:
+ 		result = urlfetch.fetch(url,deadline=30)
+  	if result.status_code != 200:
+ 		logging.error("faild to fetch "+s[0])
+ 		continue
+  	P = MyParser()
+        P.feed(result.content.decode('gbk'))
         recon = P.recom
         content += s[1] + u': ' + recon + u'\n\r'
         P.close()
@@ -52,7 +58,6 @@ def sendmail(con):
 class ParseXMLHandler(webapp.RequestHandler):
 	def get(self):
 		logging.warning("hello world")
-		logging.warning(u"你好")
 		con = Get_command()
 		logging.info(con)
 		sendmail(con)

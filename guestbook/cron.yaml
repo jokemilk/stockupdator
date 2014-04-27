@@ -1,10 +1,10 @@
 cron:
 - description: t1
   url: /stock_updater
-  schedule: every day 7:00
+  schedule: every mon,tue,wed,thu,fri 7:00
   timezone: Asia/Shanghai
   
 - description: t2
   url: /stock_updater
-  schedule: every day 19:00
+  schedule: every mon,tue,wed,thu,fri 19:00
   timezone: Asia/Shanghai
