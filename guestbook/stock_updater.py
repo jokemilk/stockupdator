@@ -43,7 +43,7 @@ def Get_command():
         recon = P.recom
         content += s[1] + u': ' + recon + u'\n\r'
         P.close()
-	logging.info(content)
+    logging.info(content)
     return content			
 
 from google.appengine.api import mail
