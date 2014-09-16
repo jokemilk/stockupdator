@@ -1,5 +1,5 @@
 application: stockupdator
-version: 1
+version: 2
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -7,6 +7,9 @@ threadsafe: yes
 handlers:
 - url: /stock_updater
   script: stock_updater.app
+- url: /_ah/mail/.+
+  script: handle_email.app
+  login: admin  
 - url: /.*
   script: guestbook.app
 
@@ -14,3 +17,6 @@ handlers:
 libraries:
 - name: webapp2
   version: "2.5.2"
+  
+inbound_services:
+- mail
