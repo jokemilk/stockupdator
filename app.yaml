@@ -10,9 +10,9 @@ handlers:
 - url: /_ah/mail/.+
   script: handle_email.app
   login: admin  
-#- url: /.*
-#  script: guestbook.app
-
+- url: /_ah/queue/default
+  script: stock_worker.app
+  login: admin  
 
 libraries:
 - name: webapp2
