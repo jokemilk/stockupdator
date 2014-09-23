@@ -10,13 +10,13 @@ handlers:
 - url: /_ah/mail/.+
   script: handle_email.app
   login: admin  
-- url: /.*
-  script: guestbook.app
+#- url: /.*
+#  script: guestbook.app
 
 
 libraries:
 - name: webapp2
-  version: "2.5.2"
+  version: latest
   
 inbound_services:
 - mail
