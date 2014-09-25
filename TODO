@@ -1,0 +1,9 @@
+1. send reply to subscriber
+2. limit subscriber number
+3. limit subscriber's max book stock number
+4. if there is error, send log to maintainer
+5. change mail's format
+6. support html mail and more encoding format
+7. optimize code naming
+8. find stock name for client and add it to db
+

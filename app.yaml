@@ -7,9 +7,9 @@ threadsafe: yes
 handlers:
 - url: /stock_updater
   script: stock_updater.app
+  login: admin  
 - url: /_ah/mail/.+
   script: handle_email.app
-  login: admin  
 - url: /_ah/queue/default
   script: stock_worker.app
   login: admin  
