@@ -1,5 +1,5 @@
 from google.appengine.ext import ndb
 
-class stockbooker(ndb.Model):
-    mailaddr = ndb.StringProperty()
+class client_db(ndb.Model):
+    mail = ndb.StringProperty(required=True)
     stocklist = ndb.TextProperty()

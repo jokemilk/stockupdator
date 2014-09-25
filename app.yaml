@@ -6,12 +6,12 @@ threadsafe: yes
 
 handlers:
 - url: /stock_updater
-  script: stock_updater.app
+  script: stock_updater_main.app
   login: admin  
 - url: /_ah/mail/.+
-  script: handle_email.app
+  script: client_mail_handler.app
 - url: /_ah/queue/default
-  script: stock_worker.app
+  script: stock_task_handler.app
   login: admin  
 
 libraries:

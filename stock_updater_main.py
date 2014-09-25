@@ -15,7 +15,7 @@ class  UpdaterHandler(webapp.RequestHandler):
                 records = stockbooker.query(ancestor=root_key)
                 #for each client add a taskqueue
                 for r in records:
-                    taskqueue.add(params={'mail': r.mailaddr , 'stocks' : r.stocklist})
+                    taskqueue.add(params={'mail': r.mail , 'stocks' : r.stocklist})
 		
 app = webapp.WSGIApplication([('/stock_updater', UpdaterHandler)],
                                      debug=True)
