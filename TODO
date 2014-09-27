@@ -6,4 +6,5 @@
 6. support html mail and more encoding format
 7. optimize code naming								done
 8. find stock name for client and add it to db
+9. add database update api
 
