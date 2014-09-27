@@ -1,4 +1,4 @@
-1. send reply to subscriber
+1. send reply to subscriber							done
 2. limit subscriber number							done
 3. limit subscriber's max book stock number			done
 4. if there is error, send log to maintainer

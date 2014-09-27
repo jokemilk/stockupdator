@@ -4,6 +4,7 @@ from google.appengine.api import urlfetch
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.api import mail
+from google.appengine.api.mail import send_mail
 from google.appengine.ext import ndb
 from database import client_db
 import logging
@@ -97,6 +98,11 @@ class EmailHandler(webapp.RequestHandler):
                         unsub(sender)
                 #reply all sub stock in mail
                 logging.info(listall(sender))
+                #send mail back to client
+                send_mail(sender='joemilu@gmail.com',
+                            to=sender,
+                            subject='Result',
+                            body=listall(sender))
 
 		
 app = webapp.WSGIApplication([('/_ah/mail/.+', EmailHandler)],debug=True)
