@@ -5,10 +5,12 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.api.labs import taskqueue
 from HTMLParser import HTMLParser
-from google.appengine.api import mail
+from google.appengine.api.mail import send_mail
 import logging
 
 mock="http://vip.stock.finance.sina.com.cn/q/go.php/vInvestConsult/kind/qgqp/index.phtml?symbol="
+admin_mail_addr = "joemilu@gmail.com" 
+defualt_subject = u"stock updator services"
 
 class MyParser(HTMLParser):
     def clear(self):
@@ -61,13 +63,6 @@ def get_stock_advices(stock_list):
     return content			
 
 
-def sendmail(receiver,content):
-	mail.send_mail(sender="joemilu@gmail.com",
-				  to=receiver,
-				  subject=u"千股千评",
-				  body=content)
-
-	
 class TaskHandler(webapp.RequestHandler):
 	def post(self):
                 client = self.request.get('client')
@@ -75,12 +70,15 @@ class TaskHandler(webapp.RequestHandler):
                 logging.info(client)
                 logging.info(stock_list)
                 #get content
-                content = get_stock_advices(stock_list)
-                if 0 != len(content):
-		    sendmail(client,content)
-                    logging.info(content)
+                advice = get_stock_advices(stock_list)
+                if 0 != len(advice):
+		    send_mail(sender=admin_mail_addr,
+                                to=client,
+                                subject=defualt_subject,
+                                body=advice)
+                    logging.info(advice)
 		
-app = webapp.WSGIApplication([('/_ah/queue/default', WorkerHandler)],
+app = webapp.WSGIApplication([('/_ah/queue/default', TaskHandler)],
                                      debug=True)
 if __name__ == '__main__':
     run_wsgi_app(app)
